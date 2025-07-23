@@ -6,6 +6,8 @@ export type InputProps = {
   value?: string;
   type?: string;
   onChange?: (e: any) => void;
+  className?: undefined | string;
+  containerClassName?: undefined | string;
 };
 
 export default function Input({
@@ -14,14 +16,16 @@ export default function Input({
   type = "text",
   value,
   onChange,
+  className = "",
+  containerClassName = "",
 }: InputProps) {
   return (
-    <label className="flex flex-col" htmlFor={name}>
-      {label ? label : ""}
+    <label className={`flex flex-col ${containerClassName}`} htmlFor={name}>
+      <span className="mb-2">{label ? label : ""}</span>
       <input
         id={name}
         name={name}
-        className="bg-[#F3F3F3] rounded px-3 py-2"
+        className={`bg-td-base rounded-md px-3 py-2 ${className}`}
         type={type}
         value={value}
         onChange={onChange}
