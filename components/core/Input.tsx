@@ -1,11 +1,13 @@
 "use client";
 
+import { InputHTMLAttributes } from "react";
+
 export type InputProps = {
   name: string;
   label?: string;
   value?: string;
   type?: string;
-  onChange?: (e: any) => void;
+  onChange?: InputHTMLAttributes<HTMLInputElement>["onChange"];
   className?: undefined | string;
   containerClassName?: undefined | string;
 };

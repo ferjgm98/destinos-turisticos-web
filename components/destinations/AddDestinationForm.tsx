@@ -1,24 +1,32 @@
 "use client";
-import { useState } from "react";
-import Input from "../core/Input";
+import { DOMAttributes, useState } from "react";
+import Input, { InputProps } from "../core/Input";
 import Button from "../core/Button";
 import TextArea from "../core/TextArea";
 
+export type DestinationItem = {
+  name: string;
+  address: string;
+  description: string;
+  imageUrl: string;
+};
+
 export default function AddDestinationForm() {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<DestinationItem>({
     name: "",
     address: "",
     description: "",
     imageUrl: "",
   });
 
-  const handleChange = (e: any) => {
+  const handleChange: InputProps["onChange"] = (e) => {
     const { name, value } = e.target;
 
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: any) => {
+  // Use built-in DOM types to handle event types
+  const handleSubmit: DOMAttributes<HTMLFormElement>["onSubmit"] = (e) => {
     e.preventDefault();
   };
 
