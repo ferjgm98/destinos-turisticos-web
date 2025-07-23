@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Input from "../core/Input";
 import Button from "../core/Button";
+import TextArea from "../core/TextArea";
 
 export default function AddForm() {
   const [form, setForm] = useState({
@@ -22,26 +23,37 @@ export default function AddForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="w-xl">
       <Input
         name="name"
         value={form.name}
         onChange={handleChange}
         label="Nombre"
+        className="w-full"
+        containerClassName="my-3"
       />
       <Input
         name="address"
         value={form.address}
         onChange={handleChange}
         label="Direccion"
+        containerClassName="my-3"
+      />
+      <TextArea
+        name="description"
+        value={form.description}
+        onChange={handleChange}
+        label="Description"
+        containerClassName="my-3"
       />
       <Input
         name="imageUrl"
         value={form.imageUrl}
         onChange={handleChange}
         label="URL de Imagen"
+        containerClassName="my-3"
       />
-      <Button label="Agregar Destino" />
+      <Button className="w-full mt-12" label="Agregar Destino" />
     </form>
   );
 }
