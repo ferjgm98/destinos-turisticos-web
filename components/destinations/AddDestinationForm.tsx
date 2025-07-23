@@ -3,6 +3,7 @@ import { DOMAttributes, useState } from "react";
 import Input, { InputProps } from "../core/Input";
 import Button from "../core/Button";
 import TextArea from "../core/TextArea";
+import { useForm } from "@/hooks/use-form/useForm";
 
 export type DestinationItem = {
   name: string;
@@ -12,52 +13,44 @@ export type DestinationItem = {
 };
 
 export default function AddDestinationForm() {
-  const [form, setForm] = useState<DestinationItem>({
-    name: "",
-    address: "",
-    description: "",
-    imageUrl: "",
+  const { fields, onChange, onSubmit } = useForm<DestinationItem>({
+    initialValues: {
+      name: "",
+      address: "",
+      description: "",
+      imageUrl: "",
+    },
+    handleSubmit: (data) => console.log(data),
   });
 
-  const handleChange: InputProps["onChange"] = (e) => {
-    const { name, value } = e.target;
-
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
-
-  // Use built-in DOM types to handle event types
-  const handleSubmit: DOMAttributes<HTMLFormElement>["onSubmit"] = (e) => {
-    e.preventDefault();
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="w-xl">
+    <form onSubmit={onSubmit} className="w-xl">
       <Input
         name="name"
-        value={form.name}
-        onChange={handleChange}
+        value={fields.name}
+        onChange={onChange}
         label="Nombre"
         className="w-full"
         containerClassName="my-3"
       />
       <Input
         name="address"
-        value={form.address}
-        onChange={handleChange}
+        value={fields.address}
+        onChange={onChange}
         label="Dirección"
         containerClassName="my-3"
       />
       <TextArea
         name="description"
-        value={form.description}
-        onChange={handleChange}
+        value={fields.description}
+        onChange={onChange}
         label="Descripción"
         containerClassName="my-3"
       />
       <Input
         name="imageUrl"
-        value={form.imageUrl}
-        onChange={handleChange}
+        value={fields.imageUrl}
+        onChange={onChange}
         label="URL de Imagen"
         containerClassName="my-3"
       />
