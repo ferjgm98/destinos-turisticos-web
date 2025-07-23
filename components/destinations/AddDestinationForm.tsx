@@ -1,6 +1,5 @@
 "use client";
-import { DOMAttributes, useState } from "react";
-import Input, { InputProps } from "../core/Input";
+import Input from "../core/Input";
 import Button from "../core/Button";
 import TextArea from "../core/TextArea";
 import { useForm } from "@/hooks/use-form/useForm";
