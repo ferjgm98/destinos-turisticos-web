@@ -3,6 +3,7 @@ import {
   DOMAttributes,
   FocusEventHandler,
   InputHTMLAttributes,
+  useMemo,
   useState,
 } from "react";
 import { UseFormProps } from "./use-form.types";
@@ -46,33 +47,47 @@ export function useForm<T = Record<string, string>>({
   const checkErrors = (props?: {
     onSuccess?: () => void;
     checkAll?: boolean;
-    field?: keyof T;
+    field?: {
+      name: keyof T;
+      value?: string;
+    };
   }) => {
     const { onSuccess, checkAll = false, field = undefined } = props || {};
-    try {
-      if (!validatorSchema) return;
-      validatorSchema?.parse(form);
+
+    if (!validatorSchema) return;
+    const result = validatorSchema?.safeParse(
+      field?.value ? { ...form, [field.name]: field.value } : { form }
+    );
+
+    if (!result.error) {
       setErrors({});
       onSuccess?.();
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const foundErrors = checkAll
-          ? error.issues
-          : error.issues?.filter((issue) =>
-              field
-                ? field === issue.path[0]
-                : touched[issue.path[0] as keyof typeof touched]
-            );
-
-        setErrors(
-          foundErrors.reduce(
-            (acc, err) => ({ ...acc, [err.path[0]]: err.message }),
-            {}
-          )
-        );
-        return;
-      }
+      return;
     }
+
+    const foundErrors = checkAll
+      ? result.error.issues
+      : result.error.issues?.filter((issue) =>
+          field
+            ? field.name === issue.path[0]
+            : touched[issue.path[0] as keyof typeof touched]
+        );
+
+    const newErrors = foundErrors.reduce(
+      (acc, err) => ({ ...acc, [err.path[0]]: err.message }),
+      {} as { [key in keyof T]?: string | null }
+    );
+
+    setErrors((prev) => {
+      const key = field?.name as keyof T;
+      const { [key]: fieldPrev = undefined, ...rest } = prev || {};
+
+      if (fieldPrev && !newErrors[key]) {
+        return { ...rest, ...newErrors };
+      }
+
+      return { ...prev, ...newErrors };
+    });
   };
 
   const handleChange: InputHTMLAttributes<
@@ -82,12 +97,11 @@ export function useForm<T = Record<string, string>>({
     setForm((prev) => ({ ...prev, [name]: value }));
     setTouched((prev) => ({ ...prev, [name]: true }));
 
-    // Workaround to fix weird sync bug. Maybe can be fixed by having a useReduced for a
-    // centralized state
-    if (value.length === 1) return;
-
     checkErrors({
-      field: name as keyof T,
+      field: {
+        name: name as keyof T,
+        value,
+      },
     });
   };
 
@@ -96,13 +110,6 @@ export function useForm<T = Record<string, string>>({
   > = (e) => {
     const { name } = e.target;
     setTouched((prev) => ({ ...prev, [name]: true }));
-    checkErrors();
-  };
-
-  const handleBlur: FocusEventHandler<
-    HTMLInputElement | HTMLTextAreaElement
-  > = () => {
-    checkErrors();
   };
 
   const onSubmit: DOMAttributes<HTMLFormElement>["onSubmit"] = (e) => {
@@ -117,13 +124,18 @@ export function useForm<T = Record<string, string>>({
     });
   };
 
+  const isValid = useMemo(() => {
+    const result = validatorSchema?.safeParse(form);
+
+    return !result?.error;
+  }, [form]);
+
   return {
     fields: form,
     onSubmit,
     onChange: handleChange,
-    onBlur: handleBlur,
     onFocus: handleFocus,
     errors,
-    isValid: !errors,
+    isValid,
   };
 }
