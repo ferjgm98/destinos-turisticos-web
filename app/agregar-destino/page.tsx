@@ -1,10 +1,14 @@
-import Input from "@/components/core/Input";
+import Card from "@/components/core/Card";
 import AddForm from "@/components/destinos/AddForm";
 
 export default function () {
   return (
-    <div className="bg-white flex justify-center items-center h-[90vh]">
+    <Card>
+      <h2 className="text-4xl text-center font-semibold my-12">
+        Agregar destino turistico
+      </h2>
+      <div className="my-8"></div>
       <AddForm />
-    </div>
+    </Card>
   );
 }
