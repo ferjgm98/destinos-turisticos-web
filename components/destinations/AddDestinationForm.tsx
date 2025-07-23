@@ -9,25 +9,26 @@ const REQUIRED_MESSAGE = "Este campo es requerido";
 const URL_MESSAGE = "Ingresa una URL valida";
 
 const DestinationItemSchema = z.object({
-  name: z.string().min(1, REQUIRED_MESSAGE),
-  address: z.string().min(1, REQUIRED_MESSAGE),
-  description: z.string().min(1, REQUIRED_MESSAGE),
+  name: z.string(REQUIRED_MESSAGE).min(1, REQUIRED_MESSAGE),
+  address: z.string(REQUIRED_MESSAGE).min(1, REQUIRED_MESSAGE),
+  description: z.string(REQUIRED_MESSAGE).min(1, REQUIRED_MESSAGE),
   imageUrl: z.url(URL_MESSAGE),
 });
 
 export type DestinationItem = z.infer<typeof DestinationItemSchema>;
 
 export default function AddDestinationForm() {
-  const { fields, onSubmit, errors, ...rest } = useForm<DestinationItem>({
-    initialValues: {
-      name: "",
-      address: "",
-      description: "",
-      imageUrl: "",
-    },
-    handleSubmit: (data) => console.log(data),
-    validatorSchema: DestinationItemSchema,
-  });
+  const { fields, onSubmit, errors, isValid, ...rest } =
+    useForm<DestinationItem>({
+      initialValues: {
+        name: "",
+        address: "",
+        description: "",
+        imageUrl: "",
+      },
+      handleSubmit: (data) => console.log(data),
+      validatorSchema: DestinationItemSchema,
+    });
 
   return (
     <form onSubmit={onSubmit} className="w-xl">
@@ -64,7 +65,11 @@ export default function AddDestinationForm() {
         containerClassName="my-3"
         error={errors?.imageUrl}
       />
-      <Button className="w-full mt-12" label="Agregar Destino" />
+      <Button
+        disabled={!isValid}
+        className="w-full mt-12"
+        label="Agregar Destino"
+      />
     </form>
   );
 }
