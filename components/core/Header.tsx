@@ -4,6 +4,7 @@ import Image from "next/image";
 import Button from "./Button";
 import { usePathname, useRouter } from "next/navigation";
 import { useMemo } from "react";
+import Link from "next/link";
 
 export default function Header() {
   const pathname = usePathname();
@@ -25,12 +26,14 @@ export default function Header() {
 
   return (
     <div className="py-4 px-4 flex justify-between items-center">
-      <Image
-        src="/images/logo.png"
-        alt="logo El Salvador"
-        width={402}
-        height={81}
-      />
+      <Link href="/">
+        <Image
+          src="/images/logo.png"
+          alt="logo El Salvador"
+          width={402}
+          height={81}
+        />
+      </Link>
 
       <Button {...buttonProps} className="px-16 cursor-pointer" />
     </div>
