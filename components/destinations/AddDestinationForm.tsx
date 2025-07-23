@@ -4,7 +4,7 @@ import Input from "../core/Input";
 import Button from "../core/Button";
 import TextArea from "../core/TextArea";
 
-export default function AddForm() {
+export default function AddDestinationForm() {
   const [form, setForm] = useState({
     name: "",
     address: "",
@@ -36,14 +36,14 @@ export default function AddForm() {
         name="address"
         value={form.address}
         onChange={handleChange}
-        label="Direccion"
+        label="Dirección"
         containerClassName="my-3"
       />
       <TextArea
         name="description"
         value={form.description}
         onChange={handleChange}
-        label="Description"
+        label="Descripción"
         containerClassName="my-3"
       />
       <Input

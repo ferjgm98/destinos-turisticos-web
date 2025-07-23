@@ -1,5 +1,5 @@
 import Card from "@/components/core/Card";
-import AddForm from "@/components/destinos/AddForm";
+import AddDestinationForm from "@/components/destinations/AddDestinationForm";
 
 export default function () {
   return (
@@ -8,7 +8,7 @@ export default function () {
         Agregar destino turístico
       </h2>
       <div className="my-4 mb-12">
-        <AddForm />
+        <AddDestinationForm />
       </div>
     </Card>
   );
