@@ -7,7 +7,7 @@ export type ButtonProps = {
 export default function Button({ label, onClick, className }: ButtonProps) {
   return (
     <button
-      className={`bg-[#E73D1E] text-white p-3 rounded ${className}`}
+      className={`bg-[#E73D1E] text-white italic p-2 rounded ${className}`}
       onClick={onClick}
     >
       {label}
