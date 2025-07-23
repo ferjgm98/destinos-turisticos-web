@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { UseFormProps } from "./use-form.types";
-import * as z from "zod/mini";
+import * as z from "zod";
 
 /**
  * useForm hook handles complex in a reusable way, it comes with:
@@ -55,7 +55,7 @@ export function useForm<T = Record<string, string>>({
       setErrors({});
       onSuccess?.();
     } catch (error) {
-      if (error instanceof z.core.$ZodError) {
+      if (error instanceof z.ZodError) {
         const foundErrors = checkAll
           ? error.issues
           : error.issues?.filter((issue) =>
