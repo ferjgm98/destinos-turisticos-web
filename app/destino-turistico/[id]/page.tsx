@@ -9,7 +9,9 @@ export default async function TouristicDestinationPage({
 }: {
   params: { id: string };
 }) {
-  const { id } = params;
+  // dynamic params must be awaited when we
+  // access them in the server side: https://nextjs.org/docs/messages/sync-dynamic-apis#possible-ways-to-fix-it
+  const { id } = await params;
   const qc = getQueryClient();
   await qc.prefetchQuery({
     queryKey: ["touristic-destination", id],

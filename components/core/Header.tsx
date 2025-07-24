@@ -32,10 +32,14 @@ export default function Header() {
           alt="logo El Salvador"
           width={402}
           height={81}
+          className="w-48 sm:w-auto"
         />
       </Link>
 
-      <Button {...buttonProps} className="px-16 mb-2 cursor-pointer" />
+      <Button
+        {...buttonProps}
+        className="text-xs md:text-base md:px-16 mb-2 cursor-pointer"
+      />
     </div>
   );
 }

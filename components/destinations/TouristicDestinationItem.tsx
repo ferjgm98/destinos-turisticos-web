@@ -17,7 +17,7 @@ export default function TouristicDestinationItem({
   return (
     <div
       key={item.id}
-      className={`flex flex-col rounded-lg mx-4 my-10 ${
+      className={`flex flex-col rounded-lg mx-4 md:my-10 ${
         isDetails ? "" : "shadow-md"
       }`}
     >
@@ -29,11 +29,11 @@ export default function TouristicDestinationItem({
           isDetails ? "h-96" : "h-48"
         }`}
       />
-      <div className="p-10 flex flex-col justify-between flex-1">
+      <div className="p-8 py-10 md:p-10 flex flex-col justify-between flex-1">
         <div className="flex justify-between items-center relative">
           <h4 className="text-2xl font-extrabold text-center">{item.name}</h4>
           <Button
-            className="bg-transparent absolute -right-8 -top-10 group"
+            className="bg-transparent absolute -right-4 md:-right-8 -top-8 md:-top-10 group"
             label={
               <div className="flex items-center gap-1 text-td-tertiary group-hover:text-td-tertiary/80">
                 <HeartIcon className="w-5 h-5 text-td-tertiary group-hover:text-td-tertiary/80" />

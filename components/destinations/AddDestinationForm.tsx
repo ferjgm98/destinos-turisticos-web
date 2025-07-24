@@ -31,7 +31,7 @@ export default function AddDestinationForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="w-xl">
+    <form onSubmit={onSubmit} className="w-full md:w-xl mx-auto">
       <Input
         name="name"
         value={fields.name}
