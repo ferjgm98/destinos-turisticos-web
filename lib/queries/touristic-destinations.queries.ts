@@ -9,6 +9,7 @@ import {
   deleteTouristicDestination,
   getTouristicDestination,
   getTouristicDestinations,
+  likeTouristicDestination,
 } from "../api/touristic-destinations.api";
 
 export const useTouristicDestinationsPage = (page: number, limit = 6) =>
@@ -43,5 +44,15 @@ export const useTouristicDestination = (id: number) => {
   return useQuery({
     queryKey: ["touristic-destination", id],
     queryFn: () => getTouristicDestination(id),
+  });
+};
+
+export const useLikeTouristicDestination = (id: number) => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: () => likeTouristicDestination(id),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["touristic-destinations", 1] });
+    },
   });
 };

@@ -36,3 +36,11 @@ export const deleteTouristicDestination = async (id: number) => {
     method: "DELETE",
   });
 };
+
+export const likeTouristicDestination = async (
+  id: number
+): Promise<{ likes: number }> => {
+  return http<{ likes: number }>(`${baseRoute}/${id}/like`, {
+    method: "POST",
+  });
+};

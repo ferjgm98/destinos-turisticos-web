@@ -2,6 +2,7 @@ import { TouristicDestination } from "@/types/touristic-destinations.types";
 import Link from "next/link";
 import Button from "../core/Button";
 import { HeartIcon } from "../icons/Heart.icon";
+import { useLikeTouristicDestination } from "@/lib/queries/touristic-destinations.queries";
 
 export type TouristicDestinationItemProps = {
   item: TouristicDestination;
@@ -14,6 +15,8 @@ export default function TouristicDestinationItem({
   isDetails = false,
   onDelete,
 }: TouristicDestinationItemProps) {
+  const like = useLikeTouristicDestination(item.id);
+
   return (
     <div
       key={item.id}
@@ -34,6 +37,7 @@ export default function TouristicDestinationItem({
           <h4 className="text-2xl font-extrabold text-center">{item.name}</h4>
           <Button
             className="bg-transparent absolute -right-4 md:-right-8 -top-8 md:-top-10 group"
+            onClick={() => like.mutate()}
             label={
               <div className="flex items-center gap-1 text-td-tertiary group-hover:text-td-tertiary/80">
                 <HeartIcon className="w-5 h-5 text-td-tertiary group-hover:text-td-tertiary/80" />
