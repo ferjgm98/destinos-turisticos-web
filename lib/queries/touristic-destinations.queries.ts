@@ -1,5 +1,6 @@
 import {
   keepPreviousData,
+  QueryClient,
   useMutation,
   useQuery,
   useQueryClient,
@@ -11,6 +12,7 @@ import {
   getTouristicDestinations,
   likeTouristicDestination,
 } from "../api/touristic-destinations.api";
+import { updateTouristicDestinationsFromCache } from "./queries.helper";
 
 export const useTouristicDestinationsPage = (page: number, limit = 6) =>
   useQuery({
@@ -51,8 +53,15 @@ export const useLikeTouristicDestination = (id: number) => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: () => likeTouristicDestination(id),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["touristic-destinations", 1] });
+    onMutate: async () => {
+      updateTouristicDestinationsFromCache(qc, id);
+    },
+    onSuccess: ({ likes }) => {
+      updateTouristicDestinationsFromCache(qc, id, likes);
+    },
+    onSettled: () => {
+      qc.invalidateQueries({ queryKey: ["touristic-destinations"] });
+      qc.invalidateQueries({ queryKey: ["touristic-destination", id] });
     },
   });
 };
