@@ -1,4 +1,5 @@
 import { http } from "@/lib/api/http";
+import { PaginatedResponse } from "@/types/base.types";
 import {
   TouristicDestination,
   TouristicDestinationInput,
@@ -6,20 +7,22 @@ import {
 
 const baseRoute = "/touristic-destinations";
 
-export const getTouristicPlaces = async (params: {
+export const getTouristicDestinations = async (params: {
   page: number;
   limit: number;
-}) => {
-  return http<TouristicDestination[]>(
+}): Promise<PaginatedResponse<TouristicDestination>> => {
+  return http<PaginatedResponse<TouristicDestination>>(
     `${baseRoute}?${new URLSearchParams(params as any).toString()}`
   );
 };
 
-export const getTouristicPlace = async (id: number) => {
+export const getTouristicDestination = async (id: number) => {
   return http<TouristicDestination>(`${baseRoute}/${id}`);
 };
 
-export const createTouristicPlace = async (data: TouristicDestinationInput) => {
+export const createTouristicDestination = async (
+  data: TouristicDestinationInput
+) => {
   return http<TouristicDestination>(`${baseRoute}`, {
     method: "POST",
     body: JSON.stringify(data),

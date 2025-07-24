@@ -1,7 +1,16 @@
+import TouristicDestinationsList from "@/components/destinations/TouristicDestinationsList";
+import { getTouristicDestinations } from "@/lib/api/touristic-destinations.api";
+import { getQueryClient } from "@/lib/react-query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import Image from "next/image";
-import HeroImage from "/images/hero.png";
 
-export default function Home() {
+export default async function Home() {
+  const qc = getQueryClient();
+  await qc.prefetchQuery({
+    queryKey: ["touristic-destinations", 1, 20],
+    queryFn: () => getTouristicDestinations({ page: 1, limit: 20 }),
+  });
+
   return (
     <div className="">
       <Image
@@ -18,6 +27,9 @@ export default function Home() {
         className="w-full object-cover"
         alt="band"
       />
+      <HydrationBoundary state={dehydrate(qc)}>
+        <TouristicDestinationsList />
+      </HydrationBoundary>
     </div>
   );
 }
