@@ -25,8 +25,8 @@ export default function TouristicDestinationItem({
       <img
         src={item.imageUrl}
         alt={item.name}
-        className={`w-full object-cover rounded-t-lg ${
-          isDetails ? "h-80" : "h-48"
+        className={`w-full object-cover object-center rounded-t-lg ${
+          isDetails ? "h-96" : "h-48"
         }`}
       />
       <div className="p-10 flex flex-col justify-between flex-1">

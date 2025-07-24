@@ -6,6 +6,8 @@ import Image from "next/image";
 
 export default async function Home() {
   const qc = getQueryClient();
+  // Prefetch the first page of touristic destinations so that the data is available
+  // reducing loading states for the user.
   await qc.prefetchQuery({
     queryKey: ["touristic-destinations", 1],
     queryFn: () => getTouristicDestinations({ page: 1, limit: 6 }),
