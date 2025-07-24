@@ -1,5 +1,7 @@
+import React from "react";
+
 export type ButtonProps = {
-  label: string;
+  label: string | React.ReactNode;
   onClick?: () => void;
   className?: string | undefined;
   disabled?: boolean;

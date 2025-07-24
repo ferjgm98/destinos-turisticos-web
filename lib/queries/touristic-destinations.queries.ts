@@ -1,4 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import {
   createTouristicDestination,
   getTouristicDestinations,
@@ -8,7 +13,7 @@ export const useTouristicDestinationsPage = (page: number, limit = 20) =>
   useQuery({
     queryKey: ["touristic-destinations", page, limit],
     queryFn: () => getTouristicDestinations({ page, limit }),
-    placeholderData: (previousData) => previousData,
+    placeholderData: keepPreviousData,
     staleTime: 60000,
   });
 

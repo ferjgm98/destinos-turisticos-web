@@ -1,0 +1,40 @@
+import { TouristicDestination } from "@/types/touristic-destinations.types";
+import Link from "next/link";
+import Button from "../core/Button";
+
+export default function TouristicDestinationItem({
+  item,
+}: {
+  item: TouristicDestination;
+}) {
+  return (
+    <div
+      key={item.id}
+      className="flex flex-col rounded-lg shadow-md mx-4 my-10"
+    >
+      {/* Using regular image tag and not NextJS due to each image url is from a different host */}
+      <img
+        src={item.imageUrl}
+        alt={item.name}
+        className="w-full h-48 object-cover rounded-t-lg"
+      />
+      <div className="p-10 flex flex-col justify-between flex-1">
+        <h4 className="text-2xl font-extrabold text-center">{item.name}</h4>
+        <p className="my-8 text-ellipsis">
+          {item.description?.substring(0, 255) +
+            (item.description?.length > 255 ? "..." : "")}
+        </p>
+        <p className="text-sm">{item.address}</p>
+        <div>
+          <Link
+            href={`/destinations/${item.id}`}
+            className="italic text-center text-sm block my-6 mb-2 hover:underline"
+          >
+            Ver más
+          </Link>
+          <Button label="Eliminar" className="w-full bg-td-secondary" />
+        </div>
+      </div>
+    </div>
+  );
+}
