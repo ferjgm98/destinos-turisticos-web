@@ -3,32 +3,32 @@ import Input from "../core/Input";
 import Button from "../core/Button";
 import TextArea from "../core/TextArea";
 import { useForm } from "@/hooks/use-form/useForm";
-import * as z from "zod";
-
-const REQUIRED_MESSAGE = "Este campo es requerido";
-const URL_MESSAGE = "Ingresa una URL valida";
-
-const DestinationItemSchema = z.object({
-  name: z.string(REQUIRED_MESSAGE).min(1, REQUIRED_MESSAGE),
-  address: z.string(REQUIRED_MESSAGE).min(1, REQUIRED_MESSAGE),
-  description: z.string(REQUIRED_MESSAGE).min(1, REQUIRED_MESSAGE),
-  imageUrl: z.url(URL_MESSAGE),
-});
-
-export type DestinationItem = z.infer<typeof DestinationItemSchema>;
+import { TouristicDestinationInput } from "@/types/touristic-destinations.types";
+import { TouristicDestinationSchema } from "@/types/schemas/touristic-places.schema";
+import { useCreateTouristicPlace } from "@/lib/queries/touristic-destinations.queries";
+import { redirect, useRouter } from "next/navigation";
 
 export default function AddDestinationForm() {
+  const router = useRouter();
+  const create = useCreateTouristicPlace();
+
   const { fields, onSubmit, errors, isValid, ...rest } =
-    useForm<DestinationItem>({
+    useForm<TouristicDestinationInput>({
       initialValues: {
         name: "",
         address: "",
         description: "",
         imageUrl: "",
       },
-      handleSubmit: (data) => console.log(data),
-      validatorSchema: DestinationItemSchema,
+      handleSubmit: (data) => {
+        create.mutate(data);
+      },
+      validatorSchema: TouristicDestinationSchema,
     });
+
+  if (create.isSuccess) {
+    redirect("/");
+  }
 
   return (
     <form onSubmit={onSubmit} className="w-xl">
@@ -66,9 +66,9 @@ export default function AddDestinationForm() {
         error={errors?.imageUrl}
       />
       <Button
-        disabled={!isValid}
+        disabled={!isValid || create.isPending}
         className="w-full mt-12"
-        label="Agregar Destino"
+        label={create.isPending ? "Guardando..." : "Agregar Destino"}
       />
     </form>
   );
