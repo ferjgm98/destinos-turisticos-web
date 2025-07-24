@@ -3,6 +3,8 @@ import Link from "next/link";
 import Button from "../core/Button";
 import { HeartIcon } from "../icons/Heart.icon";
 import { useLikeTouristicDestination } from "@/lib/queries/touristic-destinations.queries";
+import Modal from "../core/Modal";
+import { useState } from "react";
 
 export type TouristicDestinationItemProps = {
   item: TouristicDestination;
@@ -15,6 +17,7 @@ export default function TouristicDestinationItem({
   isDetails = false,
   onDelete,
 }: TouristicDestinationItemProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const like = useLikeTouristicDestination(item.id);
 
   return (
@@ -62,8 +65,31 @@ export default function TouristicDestinationItem({
             <Button
               label="Eliminar"
               className="w-full !bg-td-secondary"
-              onClick={onDelete}
+              onClick={() => setIsModalOpen(true)}
             />
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+              <h2 className="text-center font-semibold text-2xl mb-4">
+                Eliminar destino turístico
+              </h2>
+              <p className="pb-4">
+                ¿Estás seguro de querer eliminar este destino turístico?
+              </p>
+              <div className="flex justify-end gap-2">
+                <Button
+                  className="!bg-td-secondary px-3"
+                  label="Cancelar"
+                  onClick={() => setIsModalOpen(false)}
+                />
+                <Button
+                  className=" px-3"
+                  label="Eliminar"
+                  onClick={() => {
+                    onDelete();
+                    setIsModalOpen(false);
+                  }}
+                />
+              </div>
+            </Modal>
           </div>
         )}
       </div>
