@@ -37,8 +37,8 @@ export default function TouristicDestinationsList() {
   };
 
   return (
-    <div className="w-2/3 mx-auto">
-      <div className="flex justify-end items-center gap-4 mt-10">
+    <div className="w-2/3 mx-auto my-6">
+      <div className="flex justify-center md:justify-end items-center gap-4 mt-10 mb-4 md:mb-0">
         <Button
           label={<ChevronLeft className="w-6 h-6" />}
           disabled={!data?.meta?.hasPreviousPage}
