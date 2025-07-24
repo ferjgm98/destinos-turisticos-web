@@ -16,7 +16,9 @@ export const getTouristicDestinations = async (params: {
   );
 };
 
-export const getTouristicDestination = async (id: number) => {
+export const getTouristicDestination = async (
+  id: number
+): Promise<TouristicDestination> => {
   return http<TouristicDestination>(`${baseRoute}/${id}`);
 };
 

@@ -5,23 +5,29 @@ import { HeartIcon } from "../icons/Heart.icon";
 
 export type TouristicDestinationItemProps = {
   item: TouristicDestination;
+  isDetails?: boolean;
   onDelete: () => void;
 };
 
 export default function TouristicDestinationItem({
   item,
+  isDetails = false,
   onDelete,
 }: TouristicDestinationItemProps) {
   return (
     <div
       key={item.id}
-      className="flex flex-col rounded-lg shadow-md mx-4 my-10"
+      className={`flex flex-col rounded-lg mx-4 my-10 ${
+        isDetails ? "" : "shadow-md"
+      }`}
     >
       {/* Using regular image tag and not NextJS due to each image url is from a different host */}
       <img
         src={item.imageUrl}
         alt={item.name}
-        className="w-full h-48 object-cover rounded-t-lg"
+        className={`w-full object-cover rounded-t-lg ${
+          isDetails ? "h-80" : "h-48"
+        }`}
       />
       <div className="p-10 flex flex-col justify-between flex-1">
         <div className="flex justify-between items-center relative">
@@ -41,19 +47,21 @@ export default function TouristicDestinationItem({
             (item.description?.length > 255 ? "..." : "")}
         </p>
         <p className="text-sm">{item.address}</p>
-        <div>
-          <Link
-            href={`/destino-turistico/${item.id}`}
-            className="italic text-center text-sm block my-6 mb-2 hover:underline"
-          >
-            Ver más
-          </Link>
-          <Button
-            label="Eliminar"
-            className="w-full !bg-td-secondary"
-            onClick={onDelete}
-          />
-        </div>
+        {!isDetails && (
+          <div>
+            <Link
+              href={`/destino-turistico/${item.id}`}
+              className="italic text-center text-sm block my-6 mb-2 hover:underline"
+            >
+              Ver más
+            </Link>
+            <Button
+              label="Eliminar"
+              className="w-full !bg-td-secondary"
+              onClick={onDelete}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

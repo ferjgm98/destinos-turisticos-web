@@ -7,6 +7,7 @@ import {
 import {
   createTouristicDestination,
   deleteTouristicDestination,
+  getTouristicDestination,
   getTouristicDestinations,
 } from "../api/touristic-destinations.api";
 
@@ -35,5 +36,12 @@ export const useDeleteTouristicDestination = () => {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["touristic-destinations", 1] });
     },
+  });
+};
+
+export const useTouristicDestination = (id: number) => {
+  return useQuery({
+    queryKey: ["touristic-destination", id],
+    queryFn: () => getTouristicDestination(id),
   });
 };
