@@ -6,6 +6,8 @@ Este proyecto es una app web desarrollada con NextJS para la gestión de destino
 
 ## Demo
 
+[Demo en google drive](https://drive.google.com/file/d/198S9R1OdTbrD8pnY-2pxZEWAvSiAgoSe/view?usp=drive_link)
+
 ### Características principales:
 
 - **CRUD completo** de destinos turísticos
