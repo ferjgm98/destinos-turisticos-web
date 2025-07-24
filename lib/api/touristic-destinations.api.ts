@@ -44,3 +44,13 @@ export const likeTouristicDestination = async (
     method: "POST",
   });
 };
+
+export const updateTouristicDestination = async (
+  id: number,
+  data: TouristicDestinationInput
+): Promise<TouristicDestination> => {
+  return http<TouristicDestination>(`${baseRoute}/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+};

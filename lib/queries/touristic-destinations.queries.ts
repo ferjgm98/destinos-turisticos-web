@@ -11,8 +11,10 @@ import {
   getTouristicDestination,
   getTouristicDestinations,
   likeTouristicDestination,
+  updateTouristicDestination,
 } from "../api/touristic-destinations.api";
 import { updateTouristicDestinationsFromCache } from "./queries.helper";
+import { TouristicDestinationInput } from "@/types/touristic-destinations.types";
 
 export const useTouristicDestinationsPage = (page: number, limit = 6) =>
   useQuery({
@@ -28,6 +30,18 @@ export const useCreateTouristicPlace = () => {
     mutationFn: createTouristicDestination,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["touristic-destinations", 1] });
+    },
+  });
+};
+
+export const useUpdateTouristicPlace = (id: number) => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (data: TouristicDestinationInput) =>
+      updateTouristicDestination(id, data),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["touristic-destination", id] });
+      qc.invalidateQueries({ queryKey: ["touristic-destinations"] });
     },
   });
 };

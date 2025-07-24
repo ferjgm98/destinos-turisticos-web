@@ -5,6 +5,7 @@ import { HeartIcon } from "../icons/Heart.icon";
 import { useLikeTouristicDestination } from "@/lib/queries/touristic-destinations.queries";
 import Modal from "../core/Modal";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export type TouristicDestinationItemProps = {
   item: TouristicDestination;
@@ -17,6 +18,7 @@ export default function TouristicDestinationItem({
   isDetails = false,
   onDelete,
 }: TouristicDestinationItemProps) {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const like = useLikeTouristicDestination(item.id);
 
@@ -56,7 +58,7 @@ export default function TouristicDestinationItem({
               (item.description?.length > 255 ? "..." : "")}
         </p>
         <p className="text-sm">{item.address}</p>
-        {!isDetails && (
+        {!isDetails ? (
           <div>
             <Link
               href={`/destino-turistico/${item.id}`}
@@ -92,6 +94,16 @@ export default function TouristicDestinationItem({
                 />
               </div>
             </Modal>
+          </div>
+        ) : (
+          <div className="flex justify-end mt-4">
+            <Button
+              className="w-auto px-3"
+              label="Editar"
+              onClick={() => {
+                router.push(`/destino-turistico/actualizar/${item.id}`);
+              }}
+            />
           </div>
         )}
       </div>

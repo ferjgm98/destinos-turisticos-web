@@ -5,29 +5,56 @@ import TextArea from "../core/TextArea";
 import { useForm } from "@/hooks/use-form/useForm";
 import { TouristicDestinationInput } from "@/types/touristic-destinations.types";
 import { TouristicDestinationSchema } from "@/types/schemas/touristic-places.schema";
-import { useCreateTouristicPlace } from "@/lib/queries/touristic-destinations.queries";
+import {
+  useCreateTouristicPlace,
+  useUpdateTouristicPlace,
+} from "@/lib/queries/touristic-destinations.queries";
 import { redirect } from "next/navigation";
 
-export default function AddDestinationForm() {
+type AddDestinationFormProps = {
+  isEdit?: boolean;
+  initialData?: TouristicDestinationInput;
+  destinationId?: string;
+};
+
+export default function AddDestinationForm({
+  isEdit = false,
+  initialData,
+  destinationId,
+}: AddDestinationFormProps) {
   const create = useCreateTouristicPlace();
+  const update = useUpdateTouristicPlace(
+    destinationId ? Number(destinationId) : 0
+  );
+
+  // Switch mutation based on isEdit flag
+  const mutation = isEdit ? update : create;
 
   const { fields, onSubmit, errors, isValid, ...rest } =
     useForm<TouristicDestinationInput>({
-      initialValues: {
+      initialValues: initialData || {
         name: "",
         address: "",
         description: "",
         imageUrl: "",
       },
       handleSubmit: (data) => {
-        create.mutate(data);
+        mutation.mutate(data);
       },
       validatorSchema: TouristicDestinationSchema,
     });
 
-  if (create.isSuccess) {
+  if (mutation.isSuccess) {
     redirect("/");
   }
+
+  const buttonText = mutation.isPending
+    ? isEdit
+      ? "Actualizando..."
+      : "Guardando..."
+    : isEdit
+    ? "Actualizar Destino"
+    : "Agregar Destino";
 
   return (
     <form onSubmit={onSubmit} className="w-full md:w-xl mx-auto">
@@ -65,9 +92,9 @@ export default function AddDestinationForm() {
         error={errors?.imageUrl}
       />
       <Button
-        disabled={!isValid || create.isPending}
+        disabled={!isValid || mutation.isPending}
         className="w-full mt-12"
-        label={create.isPending ? "Guardando..." : "Agregar Destino"}
+        label={buttonText}
       />
     </form>
   );
