@@ -7,7 +7,7 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 export default async function TouristicDestinationPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   // dynamic params must be awaited when we
   // access them in the server side: https://nextjs.org/docs/messages/sync-dynamic-apis#possible-ways-to-fix-it

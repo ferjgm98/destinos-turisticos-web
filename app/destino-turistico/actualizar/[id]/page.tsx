@@ -5,9 +5,9 @@ import { getQueryClient } from "@/lib/react-query";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 type UpdateDestinationPageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 export default async function UpdateDestinationPage({

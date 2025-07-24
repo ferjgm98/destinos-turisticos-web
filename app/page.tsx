@@ -3,6 +3,7 @@ import { getTouristicDestinations } from "@/lib/api/touristic-destinations.api";
 import { getQueryClient } from "@/lib/react-query";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import Image from "next/image";
+import { Suspense } from "react";
 
 export default async function Home() {
   const qc = getQueryClient();
@@ -30,7 +31,15 @@ export default async function Home() {
         alt="band"
       />
       <HydrationBoundary state={dehydrate(qc)}>
-        <TouristicDestinationsList />
+        <Suspense
+          fallback={
+            <div className="w-2/3 mx-auto my-6 text-center">
+              Cargando destinos...
+            </div>
+          }
+        >
+          <TouristicDestinationsList />
+        </Suspense>
       </HydrationBoundary>
     </div>
   );
