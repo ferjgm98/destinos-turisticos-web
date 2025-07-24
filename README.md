@@ -48,13 +48,10 @@ Crea un archivo `.env.dev` en la raíz del proyecto con las siguientes variables
 
 ```env
 # API Base URL
-NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api/v1
 
 # Socket.io Server URL
 NEXT_PUBLIC_SOCKET_URL=http://localhost:8000
-
-# Environment
-NODE_ENV=development
 ```
 
 **Nota:** Ajusta las URLs según tu configuración del backend. Asegúrate de que el servidor de la API esté ejecutándose en el puerto especificado.
