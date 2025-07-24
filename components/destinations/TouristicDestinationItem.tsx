@@ -33,7 +33,7 @@ export default function TouristicDestinationItem({
         }`}
       />
       <div className="p-8 py-10 md:p-10 flex flex-col justify-between flex-1">
-        <div className="flex justify-between items-center relative">
+        <div className="flex justify-center items-center relative">
           <h4 className="text-2xl font-extrabold text-center">{item.name}</h4>
           <Button
             className="bg-transparent absolute -right-4 md:-right-8 -top-8 md:-top-10 group"
