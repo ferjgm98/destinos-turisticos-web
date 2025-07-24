@@ -6,10 +6,9 @@ import { useForm } from "@/hooks/use-form/useForm";
 import { TouristicDestinationInput } from "@/types/touristic-destinations.types";
 import { TouristicDestinationSchema } from "@/types/schemas/touristic-places.schema";
 import { useCreateTouristicPlace } from "@/lib/queries/touristic-destinations.queries";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 export default function AddDestinationForm() {
-  const router = useRouter();
   const create = useCreateTouristicPlace();
 
   const { fields, onSubmit, errors, isValid, ...rest } =

@@ -50,8 +50,10 @@ export default function TouristicDestinationItem({
           />
         </div>
         <p className="my-8 text-ellipsis">
-          {item.description?.substring(0, 255) +
-            (item.description?.length > 255 ? "..." : "")}
+          {isDetails
+            ? item.description
+            : item.description?.substring(0, 255) +
+              (item.description?.length > 255 ? "..." : "")}
         </p>
         <p className="text-sm">{item.address}</p>
         {!isDetails && (

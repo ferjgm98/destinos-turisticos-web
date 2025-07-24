@@ -57,7 +57,7 @@ export function useForm<T = Record<string, string>>({
 
       if (!validatorSchema) return;
       const result = validatorSchema?.safeParse(
-        field?.value ? { ...form, [field.name]: field.value } : form
+        field?.name ? { ...form, [field.name]: field.value?.trim() } : form
       );
 
       if (!result.error) {
