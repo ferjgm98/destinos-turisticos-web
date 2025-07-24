@@ -5,7 +5,11 @@
 Este proyecto es una app web desarrollada con NextJS para la gestión de destinos turisticos, incluyendo funcionalidad de likes en tiempo real.
 
 ## Demo
+### Ambiente de prueba
+> Ambiente de desarrollo es un poco lento e inestable debido que usa mayormente recursos gratis, pero funciona perfecto como prueba de contexto
 
+[Demo Desplegado en Vercel + Render + Supabase Postgres](https://destinos-turisticos-web.vercel.app/)
+### Video
 [Demo en google drive](https://drive.google.com/file/d/198S9R1OdTbrD8pnY-2pxZEWAvSiAgoSe/view?usp=drive_link)
 
 ### Características principales:
