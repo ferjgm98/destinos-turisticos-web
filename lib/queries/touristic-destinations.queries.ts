@@ -9,7 +9,7 @@ import {
   getTouristicDestinations,
 } from "../api/touristic-destinations.api";
 
-export const useTouristicDestinationsPage = (page: number, limit = 20) =>
+export const useTouristicDestinationsPage = (page: number, limit = 6) =>
   useQuery({
     queryKey: ["touristic-destinations", page, limit],
     queryFn: () => getTouristicDestinations({ page, limit }),

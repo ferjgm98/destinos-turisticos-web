@@ -4,8 +4,8 @@ import { useTouristicDestinationsPage } from "@/lib/queries/touristic-destinatio
 import { useRouter, useSearchParams } from "next/navigation";
 import Button from "../core/Button";
 import { useState } from "react";
-import { ChevronLeft } from "../icons/ChevronLeft";
-import { ChevronRight } from "../icons/ChevronRight";
+import { ChevronLeft } from "../icons/ChevronLeft.icon";
+import { ChevronRight } from "../icons/ChevronRight.icon";
 import TouristicDestinationItem from "./TouristicDestinationItem";
 
 export default function TouristicDestinationsList() {
@@ -14,7 +14,7 @@ export default function TouristicDestinationsList() {
   const [pagination, setPagination] = useState<{ page: number; limit: number }>(
     {
       page: Number(searchParams.get("page")) || 1,
-      limit: Number(searchParams.get("limit")) || 20,
+      limit: Number(searchParams.get("limit")) || 6,
     }
   );
 

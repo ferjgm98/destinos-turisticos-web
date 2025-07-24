@@ -7,8 +7,8 @@ import Image from "next/image";
 export default async function Home() {
   const qc = getQueryClient();
   await qc.prefetchQuery({
-    queryKey: ["touristic-destinations", 1, 20],
-    queryFn: () => getTouristicDestinations({ page: 1, limit: 20 }),
+    queryKey: ["touristic-destinations", 1, 6],
+    queryFn: () => getTouristicDestinations({ page: 1, limit: 6 }),
   });
 
   return (

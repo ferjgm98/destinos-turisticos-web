@@ -14,7 +14,7 @@ export default function Header() {
     if (pathname === "/") {
       return {
         label: "Agregar destino",
-        onClick: () => router.push("/agregar-destino"),
+        onClick: () => router.push("/destino-turistico/agregar"),
       };
     }
 
