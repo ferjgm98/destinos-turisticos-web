@@ -25,7 +25,7 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <div className="py-4 px-4 flex justify-between items-center">
+    <div className="pt-4 pb-1 px-4 flex justify-between items-center">
       <Link href="/">
         <Image
           src="/images/logo.png"
@@ -35,7 +35,7 @@ export default function Header() {
         />
       </Link>
 
-      <Button {...buttonProps} className="px-16 cursor-pointer" />
+      <Button {...buttonProps} className="px-16 mb-2 cursor-pointer" />
     </div>
   );
 }
