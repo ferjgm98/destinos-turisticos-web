@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Prueba Técnica - Sistema de Gestión de Destinos Turísticos
 
-## Getting Started
+## Descripción del Proyecto
 
-First, run the development server:
+Este proyecto es una app web desarrollada con NextJS para la gestión de destinos turisticos, incluyendo funcionalidad de likes en tiempo real.
+
+## Demo
+
+### Características principales:
+
+- **CRUD completo** de destinos turísticos
+- **Comunicación en tiempo real** con WebSockets (Socket.io)
+- **Interfaz moderna** con Tailwind CSS
+- **Gestión de estado** con React Query (@tanstack/react-query)
+- **Formularios reactivos** con validaciones
+- **Arquitectura escalable** con componentes modulares
+
+## Configuración del Entorno
+
+### 1. Clonar el repositorio
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <url-del-repositorio>
+cd prueba-tecnica-turismo
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Instalar dependencias
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+# o
+yarn install
+# o
+pnpm install
+# o
+bun install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Configurar variables de entorno
 
-## Learn More
+Crea un archivo `.env.dev` en la raíz del proyecto con las siguientes variables:
 
-To learn more about Next.js, take a look at the following resources:
+```env
+# API Base URL
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Socket.io Server URL
+NEXT_PUBLIC_SOCKET_URL=http://localhost:8000
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Environment
+NODE_ENV=development
+```
 
-## Deploy on Vercel
+**Nota:** Ajusta las URLs según tu configuración del backend. Asegúrate de que el servidor de la API esté ejecutándose en el puerto especificado.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Comandos Útiles
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Desarrollo
+
+```bash
+# Iniciar el servidor de desarrollo con Turbopack
+npm run dev
+
+# El proyecto estará disponible en http://localhost:3000
+```
+
+### Construcción y Producción
+
+```bash
+# Construir el proyecto para producción
+npm run build
+
+# Iniciar el servidor en modo producción (después de build)
+npm run start
+```
+
+### Calidad de Código
+
+```bash
+# Ejecutar el linter para revisar el código
+npm run lint
+```
+
+### Scripts de Base de Datos (si aplica)
+
+```bash
+# Ejecutar migraciones (configurar según tu backend)
+npm run migrate
+
+# Ejecutar pruebas (configurar según tus necesidades)
+npm run test
+```
+
+## Tecnologías Utilizadas
+
+- **Framework:** Next.js 15.4.3 con App Router
+- **Frontend:** React 19.1.0, Tailwind CSS 4
+- **Estado:** React Query (@tanstack/react-query)
+- **Comunicación:** Socket.io Client
+- **Validaciones:** Zod
+- **Lenguaje:** TypeScript 5
+
+## Funcionalidades
+
+1. **Listado de Destinos:** Visualización en tiempo real de todos los destinos turísticos
+2. **Agregar Destino:** Formulario para crear nuevos destinos turísticos
+3. **Detalles del Destino:** Vista detallada de cada destino
+4. **Actualizar Destino:** Edición de destinos existentes
+5. **Comunicación en Tiempo Real:** Updates automáticos vía WebSockets
