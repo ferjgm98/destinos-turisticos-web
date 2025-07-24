@@ -3,11 +3,11 @@ import {
   DOMAttributes,
   FocusEventHandler,
   InputHTMLAttributes,
+  useCallback,
   useMemo,
   useState,
 } from "react";
 import { UseFormProps } from "./use-form.types";
-import * as z from "zod";
 
 /**
  * useForm hook handles complex in a reusable way, it comes with:
@@ -44,51 +44,54 @@ export function useForm<T = Record<string, string>>({
   // 1. By default will check by items already touched
   // 2. Check all means it will check all fields
   // 3. if field is provided it will only check on that field
-  const checkErrors = (props?: {
-    onSuccess?: () => void;
-    checkAll?: boolean;
-    field?: {
-      name: keyof T;
-      value?: string;
-    };
-  }) => {
-    const { onSuccess, checkAll = false, field = undefined } = props || {};
+  const checkErrors = useCallback(
+    (props?: {
+      onSuccess?: () => void;
+      checkAll?: boolean;
+      field?: {
+        name: keyof T;
+        value?: string;
+      };
+    }) => {
+      const { onSuccess, checkAll = false, field = undefined } = props || {};
 
-    if (!validatorSchema) return;
-    const result = validatorSchema?.safeParse(
-      field?.value ? { ...form, [field.name]: field.value } : { form }
-    );
+      if (!validatorSchema) return;
+      const result = validatorSchema?.safeParse(
+        field?.value ? { ...form, [field.name]: field.value } : form
+      );
 
-    if (!result.error) {
-      setErrors({});
-      onSuccess?.();
-      return;
-    }
-
-    const foundErrors = checkAll
-      ? result.error.issues
-      : result.error.issues?.filter((issue) =>
-          field
-            ? field.name === issue.path[0]
-            : touched[issue.path[0] as keyof typeof touched]
-        );
-
-    const newErrors = foundErrors.reduce(
-      (acc, err) => ({ ...acc, [err.path[0]]: err.message }),
-      {} as { [key in keyof T]?: string | null }
-    );
-
-    setErrors((prev) => {
-      const key = field?.name as keyof T;
-      const { [key]: fieldPrev = undefined, ...rest } = prev || {};
-
-      if (fieldPrev && !newErrors[key]) {
-        return { ...rest, ...newErrors };
+      if (!result.error) {
+        setErrors({});
+        onSuccess?.();
+        return;
       }
 
-      return { ...prev, ...newErrors };
-    });
-  };
+      const foundErrors = checkAll
+        ? result.error.issues
+        : result.error.issues?.filter((issue) =>
+            field
+              ? field.name === issue.path[0]
+              : touched[issue.path[0] as keyof typeof touched]
+          );
+
+      const newErrors = foundErrors.reduce(
+        (acc, err) => ({ ...acc, [err.path[0]]: err.message }),
+        {} as { [key in keyof T]?: string | null }
+      );
+
+      setErrors((prev) => {
+        const key = field?.name as keyof T;
+        const { [key]: fieldPrev = undefined, ...rest } = prev || {};
+
+        if (fieldPrev && !newErrors[key]) {
+          return { ...rest, ...newErrors };
+        }
+
+        return { ...prev, ...newErrors };
+      });
+    },
+    [form, validatorSchema]
+  );
 
   const handleChange: InputHTMLAttributes<
     HTMLInputElement | HTMLTextAreaElement
@@ -112,6 +115,12 @@ export function useForm<T = Record<string, string>>({
     setTouched((prev) => ({ ...prev, [name]: true }));
   };
 
+  const isValid = useMemo(() => {
+    const result = validatorSchema?.safeParse(form);
+
+    return !result?.error;
+  }, [form]);
+
   const onSubmit: DOMAttributes<HTMLFormElement>["onSubmit"] = (e) => {
     e.preventDefault();
 
@@ -123,12 +132,6 @@ export function useForm<T = Record<string, string>>({
       checkAll: true,
     });
   };
-
-  const isValid = useMemo(() => {
-    const result = validatorSchema?.safeParse(form);
-
-    return !result?.error;
-  }, [form]);
 
   return {
     fields: form,
