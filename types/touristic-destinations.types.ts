@@ -6,4 +6,5 @@ export type TouristicDestinationInput = z.infer<
   typeof TouristicDestinationSchema
 >;
 
-export type TouristicDestination = TouristicDestinationInput & APIEntity;
+export type TouristicDestination = TouristicDestinationInput &
+  APIEntity & { _count: { likes: number } };

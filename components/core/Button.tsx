@@ -15,7 +15,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`bg-[#E73D1E] text-white italic p-2 rounded cursor-pointer ${className} ${
+      className={`bg-td-tertiary transition-all duration-300 text-white italic p-2 rounded cursor-pointer ${className} ${
         disabled ? "cursor-not-allowed opacity-65" : ""
       }`}
       disabled={disabled}

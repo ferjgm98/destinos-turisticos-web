@@ -1,6 +1,7 @@
 import { TouristicDestination } from "@/types/touristic-destinations.types";
 import Link from "next/link";
 import Button from "../core/Button";
+import { HeartIcon } from "../icons/Heart.icon";
 
 export default function TouristicDestinationItem({
   item,
@@ -19,7 +20,18 @@ export default function TouristicDestinationItem({
         className="w-full h-48 object-cover rounded-t-lg"
       />
       <div className="p-10 flex flex-col justify-between flex-1">
-        <h4 className="text-2xl font-extrabold text-center">{item.name}</h4>
+        <div className="flex justify-between items-center relative">
+          <h4 className="text-2xl font-extrabold text-center">{item.name}</h4>
+          <Button
+            className="bg-transparent absolute -right-8 -top-10 group"
+            label={
+              <div className="flex items-center gap-1 text-td-tertiary group-hover:text-td-tertiary/80">
+                <HeartIcon className="w-5 h-5 text-td-tertiary group-hover:text-td-tertiary/80" />
+                <p className="text-xs">{item._count.likes}</p>
+              </div>
+            }
+          />
+        </div>
         <p className="my-8 text-ellipsis">
           {item.description?.substring(0, 255) +
             (item.description?.length > 255 ? "..." : "")}
