@@ -28,3 +28,9 @@ export const createTouristicDestination = async (
     body: JSON.stringify(data),
   });
 };
+
+export const deleteTouristicDestination = async (id: number) => {
+  return http<TouristicDestination>(`${baseRoute}/${id}`, {
+    method: "DELETE",
+  });
+};

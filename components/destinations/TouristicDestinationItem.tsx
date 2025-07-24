@@ -3,11 +3,15 @@ import Link from "next/link";
 import Button from "../core/Button";
 import { HeartIcon } from "../icons/Heart.icon";
 
+export type TouristicDestinationItemProps = {
+  item: TouristicDestination;
+  onDelete: () => void;
+};
+
 export default function TouristicDestinationItem({
   item,
-}: {
-  item: TouristicDestination;
-}) {
+  onDelete,
+}: TouristicDestinationItemProps) {
   return (
     <div
       key={item.id}
@@ -39,12 +43,16 @@ export default function TouristicDestinationItem({
         <p className="text-sm">{item.address}</p>
         <div>
           <Link
-            href={`/destinations/${item.id}`}
+            href={`/destino-turistico/${item.id}`}
             className="italic text-center text-sm block my-6 mb-2 hover:underline"
           >
             Ver más
           </Link>
-          <Button label="Eliminar" className="w-full bg-td-secondary" />
+          <Button
+            label="Eliminar"
+            className="w-full !bg-td-secondary"
+            onClick={onDelete}
+          />
         </div>
       </div>
     </div>

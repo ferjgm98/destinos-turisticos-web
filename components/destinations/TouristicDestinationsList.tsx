@@ -1,6 +1,9 @@
 "use client";
 
-import { useTouristicDestinationsPage } from "@/lib/queries/touristic-destinations.queries";
+import {
+  useDeleteTouristicDestination,
+  useTouristicDestinationsPage,
+} from "@/lib/queries/touristic-destinations.queries";
 import { useRouter, useSearchParams } from "next/navigation";
 import Button from "../core/Button";
 import { useState } from "react";
@@ -11,6 +14,7 @@ import TouristicDestinationItem from "./TouristicDestinationItem";
 export default function TouristicDestinationsList() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const deleteTouristicDestination = useDeleteTouristicDestination();
   const [pagination, setPagination] = useState<{ page: number; limit: number }>(
     {
       page: Number(searchParams.get("page")) || 1,
@@ -56,7 +60,11 @@ export default function TouristicDestinationsList() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
         {data?.data.map((destination) => (
-          <TouristicDestinationItem key={destination.id} item={destination} />
+          <TouristicDestinationItem
+            key={destination.id}
+            item={destination}
+            onDelete={() => deleteTouristicDestination.mutate(destination.id)}
+          />
         ))}
       </div>
     </div>

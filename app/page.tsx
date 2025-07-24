@@ -7,7 +7,7 @@ import Image from "next/image";
 export default async function Home() {
   const qc = getQueryClient();
   await qc.prefetchQuery({
-    queryKey: ["touristic-destinations", 1, 6],
+    queryKey: ["touristic-destinations", 1],
     queryFn: () => getTouristicDestinations({ page: 1, limit: 6 }),
   });
 
@@ -16,15 +16,15 @@ export default async function Home() {
       <Image
         src="/images/hero.png"
         width={1920}
-        height={800}
+        height={400}
         alt="hero"
-        className="w-full object-cover"
+        className="w-full object-cover h-[50vh]"
       />
       <Image
         src="/images/band.png"
         width={1920}
-        height={77}
-        className="w-full object-cover"
+        height={67}
+        className="w-full object-cover h-[67px]"
         alt="band"
       />
       <HydrationBoundary state={dehydrate(qc)}>
